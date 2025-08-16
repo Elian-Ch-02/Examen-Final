@@ -4,11 +4,19 @@
  */
 package examen.pkgfinal;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author UCC
  */
 public class producto {
+
+    static void setSelectionMode(int SINGLE_SELECTION) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+   
     private int codigo;
     private String nombre;
     private int cantidad;
@@ -86,7 +94,8 @@ public class producto {
    
     
     public producto(){
-
-}
+    }
+    
+    
 }
 

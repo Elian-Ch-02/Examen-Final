@@ -4,6 +4,13 @@
  */
 package examen.pkgfinal;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import Models.producto;
+
 /**
  *
  * @author UCC
@@ -12,11 +19,61 @@ public class Inventario extends javax.swing.JFrame {
 
     /**
      * Creates new form Inventario
-     */
+     */ 
+    private ArrayList<producto> listainventario;
+    
     public Inventario() {
         initComponents();
+        listainventario = new ArrayList<>();
+        CargaDatsTable();
+        configurarTabla();
     }
 
+     
+     private void configurarTabla() {
+        // Definir columnas de la tabla
+        String[] columnas = {"Codigo", "Nombre", "Cantidad", "precio", "subtotal","total"};
+        
+        // Crear modelo de tabla que no permita edición
+        modeloTabla = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hacer la tabla de solo lectura
+            }
+        };
+        
+         Productos.setModel(modeloTabla);
+         
+        TableColumnModel columnModel = Productos.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(150); // Codigo
+        columnModel.getColumn(1).setPreferredWidth(80);  // Nombre
+        columnModel.getColumn(2).setPreferredWidth(120); // Cantidad
+        columnModel.getColumn(3).setPreferredWidth(120); // Presio
+         columnModel.getColumn(4).setPreferredWidth(120); // Subtotal
+          columnModel.getColumn(5).setPreferredWidth(120); // total
+        
+        producto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        agregarFilaTotalGeneral();
+     }
+     
+     
+     private void CargaDatsTable(){
+        DefaultTableModel modeloTabla = new DefaultTableModel();
+        modeloTabla.addColumn("codigo");
+        modeloTabla.addColumn("nombre");
+        modeloTabla.addColumn("cantidad");
+        modeloTabla.addColumn("precio");
+        modeloTabla.addColumn("subtotal");
+        modeloTabla.addColumn("total");
+        
+        for (producto inventario : listainventario ){
+            modeloTabla.addRow(new Object[]{producto.getCodigo(), producto.getNombre(), producto.getcantidad(), producto.getPresio(),producto.getSubtotal(), producto.getTotal });
+        }
+        tblInventario.setModel(modeloTabla);
+    }
+         
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -144,11 +201,11 @@ public class Inventario extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Agregar");
 
-        jButton2.setText("jButton2");
+        jButton2.setText("Limpiar");
 
-        jButton3.setText("jButton3");
+        jButton3.setText("Salir");
 
         jLabel10.setText("Valor Total del Inventario");
 
@@ -281,4 +338,8 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
+
+    private void agregarFilaTotalGeneral() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
