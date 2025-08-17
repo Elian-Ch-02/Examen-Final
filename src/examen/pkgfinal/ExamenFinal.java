@@ -15,6 +15,8 @@ public class ExamenFinal {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Inventario inventario = new Inventario();  
+        inventario.setVisible(true);
     }
     
 }
