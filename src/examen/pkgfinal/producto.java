@@ -17,8 +17,10 @@ public class producto {
     private double precio;
    
     public producto(){
+        // Constructor vacío
     }
     
+    // Constructor parametrizado 
     public producto(int codigo, String nombre, int cantidad, double precio){
         this.codigo = codigo;
         this.nombre = nombre;
@@ -26,6 +28,7 @@ public class producto {
         this.precio = precio;
     }
     
+    // Métodos getter y setter
     public int getCodigo() {
         return codigo;
     }
@@ -58,7 +61,7 @@ public class producto {
         this.precio = precio;
     }
    
-  
+  // Calcula el subtotal multiplicando la cantidad por el precio
     public double getSubTotal() {
         return cantidad * precio;
     }
@@ -67,6 +70,7 @@ public class producto {
     
    
     @Override
+    // Sobrescribe toString() para proporcionar una representación legible del producto
    public String toString() {
         return "Producto{" + "codigo='" + codigo + '\'' + ", nombre='" + nombre + '\'' + ", cantidad=" + cantidad +
                 ", precio=" + precio + ", subtotal=" + getSubTotal() +'}';

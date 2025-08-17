@@ -8,8 +8,7 @@ import java.awt.HeadlessException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+
 import javax.swing.table.DefaultTableModel;
 
 
@@ -24,32 +23,34 @@ public class Inventario extends javax.swing.JFrame {
      * Creates new form Inventario
      */ 
     
-private DefaultTableModel modeloTabla;
-    private DecimalFormat formatoMoneda;
-    private JTextArea areaListaProductos;
-    private JScrollPane scrollLista;
+private DefaultTableModel modeloTabla;// Modelo de datos para la tabla que muestra los productos
+    private DecimalFormat formatoMoneda;// Formato para mostrar precios con símbolo de dólar y dos decimales
+   
 
-    private final ArrayList<producto> listainventario;
+    private final ArrayList<producto> listainventario; // Lista que almacena todos los productos del inventario
 
     public Inventario() {
         initComponents();
-       listainventario = new ArrayList<>();
-        formatoMoneda = new DecimalFormat("$#,##0.00");  
-        configurarTabla();
+       listainventario = new ArrayList<>(); // Inicializa la lista de productos
+        formatoMoneda = new DecimalFormat("$#,##0.00"); // Configura el formato de moneda  
+        configurarTabla();// Configura el modelo de la tabla
          
     }
     
     
     
    public void agregarProducto(producto producto) {
+       // Método para agregar un producto a la lista de inventario
         listainventario.add(producto);
     }
 
     public ArrayList<producto> getProductos() {
+        // Devuelve la lista completa de productos para su uso externo
         return listainventario;
     }
 
    public double calcularValorTotal() {
+       // Calcula el valor total del inventario 
         double total = 0;
         for (producto producto : listainventario) {
             total += producto.getSubTotal();
@@ -58,10 +59,12 @@ private DefaultTableModel modeloTabla;
     }
 
     public void limpiarInventario() {
+        // Limpia todos los productos de la lista de inventari
         listainventario.clear();
     }
 
     public String listarProductos() {
+   // Genera una cadena con la información de todos los productos usando toString()
         StringBuilder lista = new StringBuilder();
         for (producto producto : listainventario) {
             lista.append(producto.toString()).append("\n");
@@ -70,6 +73,7 @@ private DefaultTableModel modeloTabla;
     }
        
        private void configurarTabla() {
+   // Configura el modelo de la tabla con columnas fijas y hace las celdas no editables
         String[] columnas = {"Código", "Nombre", "Cantidad", "Precio", "SubTotal"};
         modeloTabla = new DefaultTableModel(columnas, 0) {
             @Override
@@ -81,7 +85,9 @@ private DefaultTableModel modeloTabla;
     }
        
      public void agregarProductoAlInventario() {
+   // Método para agregar un nuevo producto al inventario desde la interfaz gráfica
         try {
+          // Valida que todos los campos estén llenos
             if (txtCodigo.getText().trim().isEmpty() || 
                 txtNombre.getText().trim().isEmpty() ||
                 txtCantidad.getText().trim().isEmpty() || 
@@ -92,12 +98,13 @@ private DefaultTableModel modeloTabla;
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
+         // Convierte los valores de los campos a los tipos adecuados
             int codigo = Integer.parseInt(txtCodigo.getText().trim());
             String nombre = txtNombre.getText().trim();
             int cantidad = Integer.parseInt(txtCantidad.getText().trim());
             double precio = Double.parseDouble(txtPrecio.getText().trim());
-
+            
+            // Valida que los valores sean positivos
             if (cantidad < 0 || precio < 0) {
                 JOptionPane.showMessageDialog(this, 
                     "La cantidad y el precio deben ser valores positivos.",
@@ -113,6 +120,7 @@ private DefaultTableModel modeloTabla;
            actualizarTablaInventario();
             limpiarCamposDeTexto();
 
+            // Muestra mensaje de éxito
             JOptionPane.showMessageDialog(this, 
                 "Producto agregado exitosamente al inventario.",
                 "Producto Agregado", 
@@ -133,6 +141,7 @@ private DefaultTableModel modeloTabla;
     }
 
    private void actualizarTablaInventario() {
+  // Actualiza la tabla con los productos actuales del inventario
         modeloTabla.setRowCount(0); // Limpiar tabla
         double valorTotalGeneral = 0.0;
 
@@ -157,6 +166,7 @@ private DefaultTableModel modeloTabla;
     
 
 private void limpiarTodosLosDatos() {
+    // Limpia todos los datos del inventario tras confirmación del usuario
         int opcion = JOptionPane.showConfirmDialog(this,
             "¿Está seguro que desea limpiar todos los datos?\n" +
             "Esta acción eliminará todos los productos del inventario.",
@@ -178,6 +188,7 @@ private void limpiarTodosLosDatos() {
     }    
 
 private void limpiarCamposDeTexto() {
+    // Limpia los campos de entrada y enfoca el campo de código
         txtCodigo.setText("");
         txtNombre.setText("");
         txtCantidad.setText("");
@@ -185,6 +196,7 @@ private void limpiarCamposDeTexto() {
         txtCodigo.requestFocus();
     }
   private void salirDeLaAplicacion() {
+      // Muestra estadísticas y solicita confirmación para salir
         int opcion = JOptionPane.showConfirmDialog(this,
             "¿Está seguro que desea salir de la aplicación?\n" +
             "Se perderán todos los datos no guardados.",
@@ -193,7 +205,7 @@ private void limpiarCamposDeTexto() {
             JOptionPane.QUESTION_MESSAGE);
 
         if (opcion == JOptionPane.YES_OPTION) {
-            System.exit(0);
+            System.exit(0); // Cierra la aplicación
         }
         StringBuilder estadisticas = new StringBuilder();
         estadisticas.append("=== ESTADÍSTICAS DEL INVENTARIO ===\n\n");
@@ -207,14 +219,17 @@ private void limpiarCamposDeTexto() {
     }
      
    private int getCantidadProductos() {
+       // Devuelve el número total de productos en el inventario
         return listainventario.size();
     }
 
     private String listarTodosLosProductos() {
+        // Devuelve una cadena con todos los productos listados
         return listarProductos();
     }
 
     private double calcularValorTotalInventario() {
+        // Calcula y devuelve el valor total del inventario
         return calcularValorTotal();
     }
    
