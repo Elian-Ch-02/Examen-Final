@@ -8,7 +8,7 @@ package examen.pkgfinal;
 
 /**
  *
- * @author UCC
+ * @author Elian
  */
 public class producto {
     private int codigo;

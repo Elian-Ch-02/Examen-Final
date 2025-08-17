@@ -6,7 +6,7 @@ package examen.pkgfinal;
 
 /**
  *
- * @author UCC
+ * @author Elian
  */
 public class ExamenFinal {
 
